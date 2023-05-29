@@ -1,5 +1,5 @@
 import Footer from '@/components/Footer';
-import {getLoginUserUsingGET, userLoginUsingPOST} from '@/services/yubi/userController';
+import {getLoginUserUsingGET, userLoginUsingPOST, userRegisterUsingPOST} from '@/services/yubi/userController';
 import {Link} from '@@/exports';
 import {LockOutlined, UserOutlined} from '@ant-design/icons';
 import {LoginForm, ProFormText} from '@ant-design/pro-components';
@@ -62,19 +62,17 @@ const Login: React.FC = () => {
     }
   };
 
-  const handleSubmit = async (values: API.UserLoginRequest) => {
+  const handleSubmit = async (values: API.UserRegisterRequest) => {
     // 登录
     try {
-      const res = await userLoginUsingPOST({...values});
+      const res = await userRegisterUsingPOST({...values});
       if (res.code === 0) {
         const defaultLoginSuccessMessage = intl.formatMessage({
           id: 'pages.login.success',
-          defaultMessage: '登录成功！',
+          defaultMessage: '注册成功！',
         });
         message.success(defaultLoginSuccessMessage);
-        await fetchUserInfo();
-        const urlParams = new URL(window.location.href).searchParams;
-        history.push(urlParams.get('redirect') || '/');
+        history.push('/user/login');
         return;
       } else {
         message.error(res.message);
@@ -82,7 +80,7 @@ const Login: React.FC = () => {
     } catch (error) {
       const defaultLoginFailureMessage = intl.formatMessage({
         id: 'pages.login.failure',
-        defaultMessage: '登录失败，请重试！',
+        defaultMessage: '注册失败，请重试！',
       });
       message.error(defaultLoginFailureMessage);
     }
@@ -95,7 +93,7 @@ return (
       <title>
         {intl.formatMessage({
           id: 'menu.login',
-          defaultMessage: '登录页',
+          defaultMessage: '注册页',
         })}
         - {Settings.title}
       </title>
@@ -119,7 +117,7 @@ return (
           autoLogin: true,
         }}
         onFinish={async (values) => {
-          await handleSubmit(values as API.UserLoginRequest);
+          await handleSubmit(values as API.UserRegisterRequest);
         }}
       >
         <Tabs
@@ -131,7 +129,7 @@ return (
               key: 'account',
               label: intl.formatMessage({
                 id: 'pages.login.accountLogin.tab',
-                defaultMessage: '账户密码登录',
+                defaultMessage: '账户密码注册',
               }),
             },
           ]}
@@ -183,6 +181,28 @@ return (
                 },
               ]}
             />
+            <ProFormText.Password
+              name="checkPassword"
+              fieldProps={{
+                size: 'large',
+                prefix: <LockOutlined/>,
+              }}
+              placeholder={intl.formatMessage({
+                id: 'pages.login.password.placeholder',
+                defaultMessage: '请输入确认密码',
+              })}
+              rules={[
+                {
+                  required: true,
+                  message: (
+                    <FormattedMessage
+                      id="pages.login.password.required"
+                      defaultMessage="确认密码格式不正确！"
+                    />
+                  ),
+                },
+              ]}
+            />
           </>
         )}
 
@@ -195,9 +215,9 @@ return (
             style={{
               marginLeft: '293px'
             }}
-            to={'/user/register'}
+            to={'/user/login'}
           >
-            注册
+            登录
           </Link>
         </div>
       </LoginForm>
