@@ -5,6 +5,12 @@ declare namespace API {
     message?: string;
   };
 
+  type BaseResponseGenChartAnalyseRespDto_ = {
+    code?: number;
+    data?: GenChartAnalyseRespDto;
+    message?: string;
+  };
+
   type BaseResponseLoginUserVO_ = {
     code?: number;
     data?: LoginUserVO;
@@ -23,12 +29,6 @@ declare namespace API {
     message?: string;
   };
 
-  type BaseResponsePageUserVO_ = {
-    code?: number;
-    data?: PageUserVO_;
-    message?: string;
-  };
-
   type BaseResponseString_ = {
     code?: number;
     data?: string;
@@ -41,22 +41,23 @@ declare namespace API {
     message?: string;
   };
 
-  type BaseResponseUserVO_ = {
-    code?: number;
-    data?: UserVO;
-    message?: string;
-  };
-
   type DeleteRequest = {
     id?: number;
   };
 
-  type getUserByIdUsingGETParams = {
-    /** id */
-    id?: number;
+  type GenChartAnalyseRespDto = {
+    chartId?: number;
+    genChart?: string;
+    genResult?: string;
   };
 
-  type getUserVOByIdUsingGETParams = {
+  type genChartAnalyseUsingPOSTParams = {
+    chartType?: string;
+    goal?: string;
+    name?: string;
+  };
+
+  type getUserByIdUsingGETParams = {
     /** id */
     id?: number;
   };
@@ -83,19 +84,6 @@ declare namespace API {
     orders?: OrderItem[];
     pages?: number;
     records?: User[];
-    searchCount?: boolean;
-    size?: number;
-    total?: number;
-  };
-
-  type PageUserVO_ = {
-    countId?: string;
-    current?: number;
-    maxLimit?: number;
-    optimizeCountSql?: boolean;
-    orders?: OrderItem[];
-    pages?: number;
-    records?: UserVO[];
     searchCount?: boolean;
     size?: number;
     total?: number;
@@ -155,15 +143,6 @@ declare namespace API {
   };
 
   type UserUpdateRequest = {
-    id?: number;
-    userAvatar?: string;
-    userName?: string;
-    userProfile?: string;
-    userRole?: string;
-  };
-
-  type UserVO = {
-    createTime?: string;
     id?: number;
     userAvatar?: string;
     userName?: string;
