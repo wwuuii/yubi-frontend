@@ -21,6 +21,7 @@ const Chart: React.FC = () => {
         ...values,
         file: undefined,
       };
+      setChart({ ...chart, genChart: undefined, genResult: undefined });
       const res = await genChartAnalyseUsingPOST(param, {}, values.file.file.originFileObj);
       if (res.code !== 0) {
         message.error(res.message);
@@ -71,16 +72,16 @@ const Chart: React.FC = () => {
                 <Select
                   options={[
                     { value: 'line_chart', label: '折线图' },
-                    { value: '柱状图', label: '柱状图' },
-                    { value: '堆叠图', label: '堆叠图' },
-                    { value: '饼图', label: '饼图' },
-                    { value: '雷达图', label: '雷达图' },
+                    { value: 'histogram', label: '柱状图' },
+                    { value: 'stack_chart', label: '堆叠图' },
+                    { value: 'pie_chart', label: '饼图' },
+                    { value: 'radar_chart', label: '雷达图' },
                   ]}
                 />
               </Form.Item>
               <Form.Item name="file" label="原始数据">
                 <Upload name="file" maxCount={1}>
-                  <Button icon={<UploadOutlined />}>上传 CSV 文件</Button>
+                  <Button icon={<UploadOutlined />}>上传 xlsx 文件</Button>
                 </Upload>
               </Form.Item>
               <Form.Item wrapperCol={{ span: 16, offset: 4 }}>
@@ -88,8 +89,8 @@ const Chart: React.FC = () => {
                   <Button
                     type="primary"
                     htmlType="submit"
-                    loading={submitting}
-                    disabled={submitting}
+                    // loading={submitting}
+                    // disabled={submitting}
                   >
                     提交
                   </Button>
@@ -101,16 +102,12 @@ const Chart: React.FC = () => {
         </Col>
         <Col span={12}>
           <Card title="分析结论">
-            {(chart?.genResult && !submitting) ?? <div>请先在左侧进行提交</div>}
+            { chart?.genResult ?? <div>请先在左侧进行提交</div>}
             <Spin spinning={submitting} />
           </Card>
           <Divider />
           <Card title="可视化图表">
-            {option && !submitting ? (
-              <ReactECharts option={option} />
-            ) : (
-              <div>请先在左侧进行提交</div>
-            )}
+            {option ? <ReactECharts option={option} /> : <div>请先在左侧进行提交</div>}
             <Spin spinning={submitting} />
           </Card>
         </Col>

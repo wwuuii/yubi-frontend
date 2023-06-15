@@ -5,9 +5,9 @@ declare namespace API {
     message?: string;
   };
 
-  type BaseResponseGenChartAnalyseRespDto_ = {
+  type BaseResponseChart_ = {
     code?: number;
-    data?: GenChartAnalyseRespDto;
+    data?: Chart;
     message?: string;
   };
 
@@ -20,6 +20,12 @@ declare namespace API {
   type BaseResponseLong_ = {
     code?: number;
     data?: number;
+    message?: string;
+  };
+
+  type BaseResponsePageChart_ = {
+    code?: number;
+    data?: PageChart_;
     message?: string;
   };
 
@@ -41,20 +47,69 @@ declare namespace API {
     message?: string;
   };
 
-  type DeleteRequest = {
-    id?: number;
-  };
-
-  type GenChartAnalyseRespDto = {
-    chartId?: number;
+  type Chart = {
+    chartData?: string;
+    chartType?: string;
+    createTime?: string;
+    execMessage?: string;
     genChart?: string;
     genResult?: string;
+    goal?: string;
+    id?: number;
+    isDelete?: number;
+    name?: string;
+    status?: number;
+    updateTime?: string;
+    userId?: number;
+  };
+
+  type ChartQueryReqDto = {
+    chartData?: string;
+    chartType?: string;
+    current?: number;
+    genChart?: string;
+    genResult?: string;
+    goal?: string;
+    id?: number;
+    name?: string;
+    pageSize?: number;
+    sortField?: string;
+    sortOrder?: string;
+    status?: number;
+    userId?: number;
+  };
+
+  type ChartReqDto = {
+    chartData?: string;
+    chartType?: string;
+    genChart?: string;
+    genResult?: string;
+    goal?: string;
+    id?: number;
+    name?: string;
+    status?: number;
+    userId?: number;
+  };
+
+  type deleteChartUsingPOSTParams = {
+    /** id */
+    id: number;
+  };
+
+  type DeleteRequest = {
+    id?: number;
   };
 
   type genChartAnalyseUsingPOSTParams = {
     chartType?: string;
     goal?: string;
     name?: string;
+    userId?: number;
+  };
+
+  type getChartByIdUsingGETParams = {
+    /** id */
+    id: number;
   };
 
   type getUserByIdUsingGETParams = {
@@ -74,6 +129,19 @@ declare namespace API {
   type OrderItem = {
     asc?: boolean;
     column?: string;
+  };
+
+  type PageChart_ = {
+    countId?: string;
+    current?: number;
+    maxLimit?: number;
+    optimizeCountSql?: boolean;
+    orders?: OrderItem[];
+    pages?: number;
+    records?: Chart[];
+    searchCount?: boolean;
+    size?: number;
+    total?: number;
   };
 
   type PageUser_ = {

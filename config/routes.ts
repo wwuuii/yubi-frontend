@@ -28,12 +28,6 @@ export default [
     ],
   },
   {
-    path: '/welcome',
-    name: 'welcome',
-    icon: 'smile',
-    component: './Welcome',
-  },
-  {
     path: '/admin',
     name: 'admin',
     icon: 'crown',
@@ -60,6 +54,13 @@ export default [
     name: '智能分析',
     icon: 'barChart'
   },
+  {
+    path: '/myChart',
+    component: './MyChart',
+    name: '我的图表',
+    icon: 'pieChart'
+  },
+  { path: '/add_chart_async', name: '智能分析（异步）', icon: 'barChart', component: './AddChartAsync' },
   {
     path: '*',
     layout: false,
